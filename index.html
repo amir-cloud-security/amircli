@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Portfolio</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css"/>
+    <style>
+        body {
+            background: #1a1611;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        /* CRT Terminal Effects */
+        .terminal {
+            height: 500px;
+            background: #1a1611 !important;
+            border-radius: 8px;
+            box-shadow: 
+                0 0 20px rgba(212, 165, 116, 0.3),
+                inset 0 0 120px rgba(212, 165, 116, 0.1);
+            position: relative;
+            font-family: 'Courier New', monospace !important;
+        }
+        
+        /* Scanlines effect */
+        .terminal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* CRT Flicker animation */
+        .terminal::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(212, 165, 116, 0.03);
+            animation: flicker 0.15s infinite linear;
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        @keyframes flicker {
+            0% { opacity: 1; }
+            98% { opacity: 1; }
+            99% { opacity: 0.98; }
+            100% { opacity: 1; }
+        }
+        
+        /* Text glow effect */
+        .terminal .terminal-output div {
+            color: #d4a574 !important;
+            text-shadow: 0 0 5px rgba(212, 165, 116, 0.5);
+        }
+        .terminal .cmd {
+            color: #d4a574 !important;
+            text-shadow: 0 0 5px rgba(212, 165, 116, 0.5);
+        }
+        .terminal .terminal-output .terminal-command {
+            color: #d4a574 !important;
+            text-shadow: 0 0 5px rgba(212, 165, 116, 0.5);
+        }
+        
+        /* Cursor glow */
+        .terminal .terminal-cursor {
+            background: #d4a574 !important;
+            box-shadow: 0 0 8px rgba(212, 165, 116, 0.8);
+            animation: cursor-glow 1s infinite alternate;
+        }
+        
+        @keyframes cursor-glow {
+            0% { box-shadow: 0 0 8px rgba(212, 165, 116, 0.8); }
+            100% { box-shadow: 0 0 12px rgba(212, 165, 116, 1); }
+        }
+        
+        /* Slight screen curvature */
+        .terminal {
+            border-radius: 12px;
+            border: 2px solid rgba(212, 165, 116, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .terminal {
+                height: 400px;
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            .terminal {
+                height: 350px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal"></div>
+    
+    <script>
+        $(document).ready(function() {
+            $('#terminal').terminal({
+                about: function() {
+                    this.echo('[[;#d4a574;]About Amirali Rasaei]');
+                    this.echo('');
+                    this.echo('Security Engineer @ THG | AWS Certified Security – Specialty');
+                    this.echo('Manchester, England, United Kingdom');
+                    this.echo('');
+                    this.echo('I am a security engineer with a focus on cloud security and');
+                    this.echo('infrastructure as code, specialising in AWS and GCP. My experience');
+                    this.echo('includes implementing Zero Trust architecture, automating CI/CD');
+                    this.echo('pipelines, and driving secure cloud migrations. I have successfully');
+                    this.echo('migrated CityAM\'s infrastructure to AWS post-acquisition and');
+                    this.echo('upgraded a 1Password SCIM cluster in GCP.');
+                },
+                help: function() {
+                    this.echo('[[;#d4a574;]Available Commands:]');
+                    this.echo('');
+                    this.echo('  about      - About me');
+                    this.echo('  secrets    - 🤫');
+                    this.echo('  skills     - Technical skills and certifications');
+                    this.echo('  experience - Professional experience');
+                    this.echo('  education  - Educational background');
+                    this.echo('  contact    - Contact information');
+                    this.echo('  awards     - Honors and awards');
+                    this.echo('  clear      - Clear terminal');
+                },
+                skills: function() {
+                    this.echo('[[;#d4a574;]Technical Skills & Certifications]');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]Top Skills:]');
+                    this.echo('• Terraform');
+                    this.echo('• Pulumi');
+                    this.echo('• Network Security');
+                    this.echo('• Python');
+                    this.echo('• CI/CD Pipelines');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]Cloud Platforms:]');
+                    this.echo('• AWS (CloudTrail, IAM, Security)');
+                    this.echo('• Google Cloud Platform (GCP)');
+                    this.echo('• Infrastructure as Code');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]Security & Tools:]');
+                    this.echo('• Zero Trust Architecture');
+                    this.echo('• ElasticSearch');
+                    this.echo('• GitHub Actions');
+                    this.echo('• GCP Secret Manager');
+                    this.echo('• 1Password SCIM');
+                    this.echo('• Power Automate & SharePoint');
+                },
+                experience: function() {
+                    this.echo('[[;#d4a574;]Professional Experience]');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]THG] (4 years 2 months)');
+                    this.echo('[[;#cyan;]Security Engineer] (Sep 2023 - Present)');
+                    this.echo('• Zero Trust architecture for 7,000+ devices using Pulumi/Python');
+                    this.echo('• AWS CloudTrail + ElasticSearch integration, GCP migrations');
+                    this.echo('• Mentored teams on GitHub pipelines and OIDC solutions');
+                    this.echo('');
+                    this.echo('[[;#cyan;]Info Security Analyst] (Jun 2022 - Oct 2023)');
+                    this.echo('• Automated GRC processes with Power Automate/SharePoint');
+                    this.echo('• Built PowerApps for risk management and ISO 27001 compliance');
+                    this.echo('');
+                    this.echo('[[;#cyan;]Info Security Analyst Graduate] (Jun 2021 - Jun 2022)');
+                    this.echo('Manchester Airport');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]Cyber Resilience Centre GM] (May 2020 - Jun 2021)');
+                    this.echo('[[;#cyan;]Cyber Security Consultant]');
+                    this.echo('• Cybersecurity training for SMEs via Zoom');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]University of Salford] (Nov 2020 - Apr 2021)');
+                    this.echo('[[;#cyan;]CS Teaching Assistant/Mentor]');
+                },
+                education: function() {
+                    this.echo('[[;#d4a574;]Education]');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]The University of Salford] (2016 - 2021)');
+                    this.echo('[[;#cyan;]BSc (Hons) Computer Science with Web Development]');
+                    this.echo('[[;#gold;]Grade: First Class Honours]');
+                    this.echo('');
+                    this.echo('[[;#cyan;]Activities & Leadership:]');
+                    this.echo('• President of Computer Science Society');
+                    this.echo('• Co-founder of European Society');
+                    this.echo('• School Representative for Computer Science & Engineering');
+                    this.echo('• Library Champion');
+                    this.echo('• Teaching Assistant');
+                },
+                awards: function() {
+                    this.echo('[[;#d4a574;]Honors & Awards]');
+                    this.echo('');
+                    this.echo('• [[;#gold;]AWS Certified Security – Specialty]');
+                    this.echo('• Vice-Chancellor\'s Excellence Scholarship');
+                    this.echo('• Best Society of the Year');
+                },
+                contact: function() {
+                    this.echo('[[;#d4a574;]Contact Information]');
+                    this.echo('');
+                    this.echo('💼 LinkedIn: [[;#cyan;]https://www.linkedin.com/in/amirali-rasaei/]');
+                    this.echo('🎥 YouTube: [[;#cyan;]https://www.youtube.com/@AmirCloudSecurity]');
+                    this.echo('📍 Location: Manchester, England, United Kingdom');
+                },
+                secrets: function() {
+                    this.echo('[[;#d4a574;]🤫 Secret Commands Discovered!]');
+                    this.echo('');
+                    this.echo('Try these hidden commands:');
+                    this.echo('• whoami   - Reveal your identity');
+                    this.echo('• sudo     - Attempt privilege escalation');
+                    this.echo('• hack     - Enter the matrix');
+                    this.echo('• coffee   - Fuel for coding');
+                    this.echo('');
+                    this.echo('More secrets await discovery... 🔍');
+                },
+                whoami: function() {
+                    const term = this;
+                    fetch('https://api.ipify.org?format=json')
+                        .then(response => response.json())
+                        .then(data => {
+                            term.echo('[[;#d4a574;]Identity Analysis:]');
+                            term.echo('');
+                            term.echo(`IP Address: [[;#cyan;]${data.ip}]`);
+                            term.echo('Status: [[;#ffff00;]Curious Visitor]');
+                            term.echo('Location: [[;#cyan;]Exploring Amirali\'s Terminal]');
+                            term.echo('Clearance Level: [[;#ff6b6b;]Guest]');
+                        })
+                        .catch(() => {
+                            term.echo('[[;#d4a574;]Identity Analysis:]');
+                            term.echo('');
+                            term.echo('IP Address: [[;#cyan;]Hidden behind proxy]');
+                            term.echo('Status: [[;#ffff00;]Mysterious Visitor]');
+                            term.echo('Location: [[;#cyan;]Exploring Amirali\'s Terminal]');
+                            term.echo('Clearance Level: [[;#ff6b6b;]Guest]');
+                        });
+                },
+                sudo: function() {
+                    this.echo('[[;#ff6b6b;]⚠️  ACCESS DENIED ⚠️]');
+                    this.echo('');
+                    this.echo('Nice try! 😄');
+                    this.echo('[[;#ffff00;]amirali] is not in the sudoers file.');
+                    this.echo('This incident will be reported... to Amirali 📧');
+                    this.echo('');
+                    this.echo('💡 Tip: Try being polite instead of hacking!');
+                },
+                hack: function() {
+                    const term = this;
+                    this.echo('[[;#00ff00;]Initiating Matrix Protocol...]');
+                    this.echo('');
+                    
+                    let count = 0;
+                    const matrix = setInterval(() => {
+                        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+                        let line = '';
+                        for(let i = 0; i < 60; i++) {
+                            line += chars[Math.floor(Math.random() * chars.length)];
+                        }
+                        term.echo(`[[;#00ff00;]${line}]`);
+                        
+                        count++;
+                        if(count >= 8) {
+                            clearInterval(matrix);
+                            term.echo('');
+                            term.echo('[[;#d4a574;]🔴 Red pill or blue pill? 💊]');
+                            term.echo('[[;#cyan;]Welcome to the real world, Neo...]');
+                            term.echo('[[;#ffff00;]Just kidding! 😄 You\'re still in Amirali\'s portfolio.]');
+                        }
+                    }, 200);
+                },
+                coffee: function() {
+                    this.echo('[[;#d4a574;]☕ Brewing the perfect cup...]');
+                    this.echo('');
+                    this.echo('      (  )   (   )  )');
+                    this.echo('       ) (   )  (  (');
+                    this.echo('       ( )  (    ) )');
+                    this.echo('       _____________');
+                    this.echo('      <_____________> ___');
+                    this.echo('      |             |/ _ \\');
+                    this.echo('      |               | | |');
+                    this.echo('      |               |_| |');
+                    this.echo('   ___|             |\\___/');
+                    this.echo('  /    \\___________/    \\');
+                    this.echo('  \\_____________________/');
+                    this.echo('');
+                    this.echo('[[;#ffff00;]Coffee ready! ☕]');
+                    this.echo('Perfect fuel for late-night coding sessions...');
+                    this.echo('and securing cloud infrastructure! 🔒');
+                }
+            }, {
+                greetings: function() {
+                    const isMobile = window.innerWidth <= 768;
+                    const isSmallMobile = window.innerWidth <= 480;
+                    
+                    if (isSmallMobile) {
+                        return `[[;#d4a574;]
+ ▄▀█ █▀▄▀█ █ █▀█ ▄▀█ █   █  
+ █▀█ █ ▀ █ █ █▀▄ █▀█ █▄▄ █  
+                            
+ █▀█ ▄▀█ █▀ ▄▀█ █▀▀ █      
+ █▀▄ █▀█ ▄█ █▀█ ██▄ █      ]
+
+Welcome to my terminal portfolio!
+Type "help" to get started.`;
+                    } else if (isMobile) {
+                        return `[[;#d4a574;]
+ █████╗ ███╗   ███╗██╗██████╗  █████╗ ██╗     ██╗
+██╔══██╗████╗ ████║██║██╔══██╗██╔══██╗██║     ██║
+███████║██╔████╔██║██║██████╔╝███████║██║     ██║
+██╔══██║██║╚██╔╝██║██║██╔══██╗██╔══██║██║     ██║
+██║  ██║██║ ╚═╝ ██║██║██║  ██║██║  ██║███████╗██║
+╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝
+
+██████╗  █████╗ ███████╗ █████╗ ███████╗██╗
+██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝██║
+██████╔╝███████║███████╗███████║█████╗  ██║
+██╔══██╗██╔══██║╚════██║██╔══██║██╔══╝  ██║
+██║  ██║██║  ██║███████║██║  ██║███████╗██║
+╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝]
+
+Welcome to my terminal portfolio!
+Type "help" to get started.`;
+                    } else {
+                        return `[[;#d4a574;]
+ █████╗ ███╗   ███╗██╗██████╗  █████╗ ██╗     ██╗    ██████╗  █████╗ ███████╗ █████╗ ███████╗██╗
+██╔══██╗████╗ ████║██║██╔══██╗██╔══██╗██║     ██║    ██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝██║
+███████║██╔████╔██║██║██████╔╝███████║██║     ██║    ██████╔╝███████║███████╗███████║█████╗  ██║
+██╔══██║██║╚██╔╝██║██║██╔══██╗██╔══██║██║     ██║    ██╔══██╗██╔══██║╚════██║██╔══██║██╔══╝  ██║
+██║  ██║██║ ╚═╝ ██║██║██║  ██║██║  ██║███████╗██║    ██║  ██║██║  ██║███████║██║  ██║███████╗██║
+╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝]
+
+Welcome to my terminal portfolio!
+Type "help" to get started.`;
+                    }
+                },
+                name: 'portfolio',
+                height: 500,
+                prompt: '$ '
+            });
+        });
+    </script>
+</body>
+</html>
