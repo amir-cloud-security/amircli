@@ -1,2 +1,2 @@
 # amircli
-Interactive terminal portfolio website
+Interactive terminal personal website
